@@ -1,0 +1,11 @@
+commit 3c513c99686890efe6840484f3710e8c22f84382
+Author: Oleg.Buyalski <zidabah@mail.ru>
+Date:   Wed Feb 8 22:24:10 2017 +0300
+
+    Added status.txt
+
+commit 3421f37e44492bcb15b647f6cbf6e8b198915a73
+Author: Oleg.Buyalski <zidabah@mail.ru>
+Date:   Wed Feb 8 22:16:50 2017 +0300
+
+    Added .gitignore
