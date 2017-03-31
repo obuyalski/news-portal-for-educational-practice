@@ -42,6 +42,6 @@ http.createServer((req, res) => {
         return string.substring(string.lastIndexOf('.'));
     }
 
-}).listen(3000);
+}).listen(port);
 
 console.log('Server in running on the port 3000');
