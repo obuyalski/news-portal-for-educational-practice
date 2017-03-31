@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>NB</title>
+    <link type="text/css" href="styles.css" rel="stylesheet"/>
+    <script src="https://use.fontawesome.com/d4971ca55b.js"></script>
+
+</head>
+<body>
+
+<header>
+    <nav role="navigation">
+        <ul id="menu">
+            <li><a class="home" href="#home">Главная</a></li>
+            <li class="search"><input class="text"/></li>
+            <li><a class="fa fa-sign-in" aria-hidden="true"></a>
+                <a class="fa fa-pencil-square-o" aria-hidden="true"></a>
+                <div id="modal-box-overlay">
+                    <div class="new-post">
+                        <h2>Добавить новость</h2>
+                        <input class="news-title" type="text-news" placeholder="Заголовок">
+                        <input id="news-img" type="text-news" placeholder="URL фотографии">
+                        <textarea class="news-summary" placeholder="Краткое описание новости"></textarea>
+                        <textarea class="news-content" placeholder="Новость"></textarea>
+                        <input class="news-tags" placeholder="#теги">
+                        <span class="underline"></span>
+                        <span>
+                        <button id="btn-publish-article">Опубликовать</button>
+                        </span>
+                    </div>
+                </div>
+            </li>
+            <li class="logout-link">Войти</li>
+            <div class="logout_sign-in">
+                <div class="cont_principal">
+                    <div class="cont_centrar">
+                        <div class="cont_login">
+                            <form action="">
+                                <div class="cont_tabs_login">
+                                    <ul class='ul_tabs'>
+                                        <li class="active"><a href="#"></a>
+                                            <span class="linea_bajo_nom"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="cont_text_inputs">
+                                    <input type="text" class="input_form_sign d_block active_inp" placeholder="Логин" name="emauil_us"/>
+                                    <input type="password" class="input_form_sign d_block  active_inp" placeholder="Пароль" name="pass_us"/>
+                                    <div class="terms_and_cons d_none">
+                                    </div>
+                                </div>
+                                <div class="cont_btn"><button class="btn_sign">Войти</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <li class="dropdown">
+                <a class="dropbtn"></a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<div class="filter">
+    <div class="parameter">
+        <div class="fa fa-sliders" aria-hidden="true">
+            Параметры поиска
+        </div>
+    </div>
+    <div>
+        <p><br>Выберите дату:<br><input class="search-articles-by-date" type="date" name="calendar">
+            <input class="search-articles-by-author" type="datetime" placeholder="Имя автора">
+            <input class="search-articles-by-tags" type="datetime" placeholder="Теги">
+            <button class="filter-article-list">Поиск</button>
+    </div>
+    <div class="header-tags">
+        Популярное
+    </div>
+    <div class="tags">
+        <span class="tag" id="1">Минск</span>
+        <span class="tag">Новости</span>
+        <span class="tag">Портал</span>
+        <span class="tag">Снег</span>
+        <span class="tag">Весна</span>
+        <span class="tag">Март</span>
+    </div>
+</div>
+
+
+<div class="article-list">
+</div>
+
+<button id="pagination-show-more">Показать ещё</button>
+
+<div class="display-news">
+    <div class="article-title"></div>
+    <br>
+    <p class="image-post"><img id="article-image"></p>
+    <span class="article-author"></span>
+    <span class="article-date">January 1, 2016 03.44 am</span>
+    <div class="article-content"></div>
+    <span class="article-tags"></span>
+    </div>
+
+
+</div>
+
+<footer>
+    <div class="project-name">
+        <br>5 группа 2 курс
+        <br>zidabah@mail.ru
+        <br>
+        <div id="current-year">©2017</div>
+    </div>
+</footer>
+
+<template id="template-article-list-item">
+    <div class="article-list-item" data-id="id">
+        <img id="article-list-item-image" src="https://static.pexels.com/photos/20974/pexels-photo.jpg">
+        <div class="dropdn" style="float: right">
+            <div class="fa fa-chevron-down" aria-hidden="true"></div>
+            <div class="dropdown-content">
+                <button type="button" class="edit-post">Изменить</button>
+                <button type="button" class="remove-post">Удалить</button>
+            </div>
+        </div>
+        <div class="article-list-item-title"></div>
+        <div class="article-list-item-summary">
+        </div>
+        <div class="article-list-item-content">
+        </div>
+        <div class="article-list-item-meta">
+            <span class="article-list-item-author"></span>
+            <span class="article-list-item-date">January 1, 2016 03.44 am</span>
+        </div>
+        <div class="article-list-item-tags"></div>
+        <hr>
+        <span><button class="read-more">Читать</button></span>
+    </div>
+</template>
+
+<script type="text/javascript" src="script.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
