@@ -69,9 +69,14 @@ let articleRenderer = (function () {
         }
     }
 
+    function removeArticle(articleDomEntity) {
+        ARTICLE_LIST_NODE.removeChild(articleDomEntity);
+    }
+
     return {
         init: init,
         renderArticles: renderArticles,
-        renderArticle: renderArticle
+        renderArticle: renderArticle,
+        removeArticle: removeArticle
     };
 }());

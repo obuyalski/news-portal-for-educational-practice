@@ -243,6 +243,22 @@ app.post('/article', (req, res) => {
     }
 });
 
+app.delete('/article', (req, res) => {
+    let id = req.query.id;
+    let articleIdx = GLOBAL_ARTICLES.map(function (article) {
+        return article.id;
+    }).indexOf(id);
+
+    if (articleIdx !== -1) {
+        let removedArticle = GLOBAL_ARTICLES[articleIdx];
+        GLOBAL_ARTICLES.splice(articleIdx, 1);
+        res.json(removedArticle);
+    } else {
+        res.status(500);
+        res.send('Article with id = ' + id + ' not found');
+    }
+});
+
 app.listen(app.get('port'), () => {
     console.log('Example app listening on port 3000!');
 

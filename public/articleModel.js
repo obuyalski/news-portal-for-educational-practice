@@ -62,9 +62,30 @@ let articleModel = (function () {
         return !!string && string.length > 0 && string.length <= maxLength;
     }
 
+    function removeArticleById(id, callback) {
+
+        function handler() {
+            let article = JSON.parse(this.responseText);
+            GLOBAL_ARTICLES.unshift(article);
+
+            callback({status: this.status, statusText: this.statusText}, article);
+            oReq.removeEventListener('load', handler);
+        }
+
+        oReq.addEventListener('load', handler);
+
+        oReq.open('DELETE', buildQuery());
+        oReq.send();
+
+        function buildQuery() {
+            return '/article?id=' + id;
+        }
+    }
+
     return {
         getArticles: getArticles,
-        addArticle: addArticle
+        addArticle: addArticle,
+        removeArticleById: removeArticleById
     }
 
 }());

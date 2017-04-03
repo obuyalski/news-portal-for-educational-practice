@@ -88,18 +88,19 @@ let articleActions = (function () {
     }
 
     function handleRemoveArticleAction(articleNodeToDelete) {
-        ARTICLE_LIST_NODE.removeChild(articleNodeToDelete);
-        articleModel.removeArticleById(articleNodeToDelete.dataset.id);
+        articleModel.removeArticleById(articleNodeToDelete.dataset.id, (response, article) => {
+            if (response.status === 200) {
+                articleRenderer.removeArticle(articleNodeToDelete);
+            }
+        });
     }
 
     function addArticle(article) {
-
         articleModel.addArticle(article, (response, article) => {
             if (response.status === 200) {
                 articleRenderer.renderArticle(article);
             }
         });
-
     }
 
     function editArticle(article) {
