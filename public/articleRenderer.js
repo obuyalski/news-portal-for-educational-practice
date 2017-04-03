@@ -24,8 +24,6 @@ let articleRenderer = (function () {
     function createArticleDomEntity(article) {
         let template = ARTICLE_TEMPLATE;
 
-        template.content.querySelector('.article-list-item-tags').textContent = '';
-
         template.content.querySelector('.article-list-item').dataset.id = article.id;
         template.content.querySelector('.article-list-item-title').textContent = article.title;
         template.content.querySelector('.article-list-item-summary').textContent = article.summary;
@@ -57,6 +55,7 @@ let articleRenderer = (function () {
     }
 
     function formatTags(template, tags) {
+        template.textContent = '';
 
         tags.forEach((tag) => {
             template.appendChild(createTagDomEntity(tag));
