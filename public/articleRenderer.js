@@ -32,17 +32,9 @@ let articleRenderer = (function () {
         template.content.querySelector('.article-list-item-content').textContent = article.content;
         template.content.querySelector('#article-list-item-image').src = article.image;
         template.content.querySelector('.article-list-item-author').textContent = article.author;
-        // template.content.querySelector('.article-list-item-date').textContent = formatDate(article.createdAt);
-        /*article.tags = unique(article.tags);
-        var a = '';
+        template.content.querySelector('.article-list-item-date').textContent = formatDate(article.createdAt);
+        formatTags(template.content.querySelector('.article-list-item-tags'), article.tags);
 
-        for (var i = 0; i < article.tags.length; i++) {
-            a = document.createElement('a');
-            a.className = 'article-list-item-tag';
-            a.innerHTML = article.tags[i] + ' ';
-            template.content.querySelector('.article-list-item-tags').appendChild(a);
-        }
-        */
         template.content.querySelector('.fa-chevron-down').style.display = 'inline-block';
         return template.content.querySelector('.article-list-item').cloneNode(true);
     }
@@ -50,6 +42,32 @@ let articleRenderer = (function () {
     function renderArticle(article) {
         let node = createArticleDomEntity(article);
         ARTICLE_LIST_NODE.insertBefore(node, ARTICLE_LIST_NODE.childNodes[0]);
+    }
+
+    function formatDate(string) {
+        let date;
+
+        if (!string) {
+            date = new Date();
+        } else {
+            date = new Date(string);
+        }
+
+        return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+    }
+
+    function formatTags(template, tags) {
+
+        tags.forEach((tag) => {
+            template.appendChild(createTagDomEntity(tag));
+        });
+
+        function createTagDomEntity(innerHtml) {
+            let a = document.createElement('a');
+            a.className = 'article-list-item-tag';
+            a.innerHTML = innerHtml;
+            return a;
+        }
     }
 
     return {
