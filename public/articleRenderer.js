@@ -73,10 +73,16 @@ let articleRenderer = (function () {
         ARTICLE_LIST_NODE.removeChild(articleDomEntity);
     }
 
+    function updateArticle(article) {
+        let node = createArticleDomEntity(article);
+        ARTICLE_LIST_NODE.replaceChild(node, document.querySelector("[data-id='" + article.id + "']"));
+    }
+
     return {
         init: init,
         renderArticles: renderArticles,
         renderArticle: renderArticle,
-        removeArticle: removeArticle
+        removeArticle: removeArticle,
+        updateArticle: updateArticle
     };
 }());

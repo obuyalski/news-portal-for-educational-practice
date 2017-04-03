@@ -231,6 +231,18 @@ app.get('/articles', (req, res) => {
     res.json(GLOBAL_ARTICLES.slice(req.query.skip, req.query.skip + req.query.top));
 });
 
+app.get('/article', (req, res) => {
+    let id = req.query.id;
+    let article = GLOBAL_ARTICLES.filter((article) => article.id === id);
+
+    if (article) {
+        res.json(article[0]);
+    } else {
+        res.status(404);
+        res.send('Article with id = ' + id + ' not found');
+    }
+});
+
 app.post('/article', (req, res) => {
     let filledArticle = fillArticle(req.body.article);
     GLOBAL_ARTICLES.unshift(filledArticle);
@@ -245,17 +257,32 @@ app.post('/article', (req, res) => {
 
 app.delete('/article', (req, res) => {
     let id = req.query.id;
-    let articleIdx = GLOBAL_ARTICLES.map(function (article) {
-        return article.id;
-    }).indexOf(id);
+    let article = GLOBAL_ARTICLES.filter((article) => article.id === id);
 
-    if (articleIdx !== -1) {
-        let removedArticle = GLOBAL_ARTICLES[articleIdx];
-        GLOBAL_ARTICLES.splice(articleIdx, 1);
-        res.json(removedArticle);
+    if (article) {
+        GLOBAL_ARTICLES.splice(id, 1);
+        res.json(article[0]);
     } else {
-        res.status(500);
+        res.status(404);
         res.send('Article with id = ' + id + ' not found');
+    }
+});
+
+app.put('/article', (req, res) => {
+    let id = req.query.id;
+    let article = req.body.article;
+    let articleArray = GLOBAL_ARTICLES.filter((article) => article.id === id);
+
+    if (articleArray) {
+        replaceArticle(articleArray[0], article);
+        res.json(articleArray[0]);
+    } else {
+        res.status(404);
+        res.send('Article with id = ' + id + ' not found');
+    }
+
+    function replaceArticle(oldArticle, newArticle) {
+        Object.keys(newArticle).forEach((key) => oldArticle[key] = newArticle[key]);
     }
 });
 

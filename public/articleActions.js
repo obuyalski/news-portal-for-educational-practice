@@ -55,9 +55,11 @@ let articleActions = (function () {
     function handleEditArticleAction(article) {
         modalBox.setCloseBtnInnerText(EDIT_ARTICLE_BTN_INNER_TEXT);
 
-        let a = articleModel.getArticleById(article.dataset.id);
-
-        modalBox.openAndFillInputFields(a);
+        articleModel.getArticleById(article.dataset.id, (response, article) => {
+            if (response.status === 200) {
+                modalBox.openAndFillInputFields(article);
+            }
+        });
     }
 
     function handleLogoutContainerClick() {
@@ -104,16 +106,16 @@ let articleActions = (function () {
     }
 
     function editArticle(article) {
-        let editedArticle = articleModel.editArticle(article.id, article);
-        let list = document.getElementsByClassName('article-list')[0];
 
-        if (editedArticle) {
-            let renderEditArticle = articleRenderer.renderArticle(editedArticle, false);
-            ARTICLE_LIST_NODE.replaceChild(renderEditArticle, document.querySelector("[data-id='" + article.id + "']"));
-        }
+        articleModel.editArticle(article, (response, article) => {
+            if (response.status === 200) {
+                articleRenderer.updateArticle(article);
+            }
+        });
+
     }
 
-    function FillingOutNewsForm(article){
+    function FillingOutNewsForm(article) {
 
 
         document.querySelector('.article-title').textContent = article.title;
@@ -142,13 +144,13 @@ let articleActions = (function () {
             filterConfig.author = author;
         }
         if (tags !== '' && tags !== ' ') {
-            filterConfig.tags =  tags.split(/\s+/);
+            filterConfig.tags = tags.split(/\s+/);
         }
         if (date !== '' && date !== ' ') {
             filterConfig.createdAt = date;
         }
 
-        if(Object.keys(filterConfig).length === 0)
+        if (Object.keys(filterConfig).length === 0)
             return;
 
         return filterConfig;

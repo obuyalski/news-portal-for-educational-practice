@@ -82,10 +82,55 @@ let articleModel = (function () {
         }
     }
 
+    function getArticleById(id, callback) {
+        function handler() {
+            let article = JSON.parse(this.responseText);
+
+            callback({status: this.status, statusText: this.statusText}, article);
+            oReq.removeEventListener('load', handler);
+        }
+
+        oReq.addEventListener('load', handler);
+
+        oReq.open('GET', buildQuery());
+        oReq.send();
+
+        function buildQuery() {
+            return '/article?id=' + id;
+        }
+    }
+
+    function editArticle(article, callback) {
+        function handler() {
+            let article = JSON.parse(this.responseText);
+            let articleArray = GLOBAL_ARTICLES.filter((article) => article.id === id);
+            replaceArticle(articleArray[0], article);
+
+            callback({status: this.status, statusText: this.statusText}, article);
+            oReq.removeEventListener('load', handler);
+
+            function replaceArticle(oldArticle, newArticle) {
+                Object.keys(newArticle).forEach((key) => oldArticle[key] = newArticle[key]);
+            }
+        }
+
+        oReq.addEventListener('load', handler);
+
+        oReq.open('PUT', buildQuery());
+        oReq.setRequestHeader('content-type', 'application/json');
+        oReq.send(JSON.stringify({article: article}));
+
+        function buildQuery() {
+            return '/article?id=' + article.id;
+        }
+    }
+
     return {
         getArticles: getArticles,
         addArticle: addArticle,
-        removeArticleById: removeArticleById
+        removeArticleById: removeArticleById,
+        getArticleById: getArticleById,
+        editArticle: editArticle
     }
 
 }());
