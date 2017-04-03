@@ -13,7 +13,7 @@ let articleModel = (function () {
             GLOBAL_ARTICLES.push(articles);
 
             callback({status: this.status, statusText: this.statusText}, articles);
-            oReq.removeEventListener('load');
+            oReq.removeEventListener('load', handler);
         }
 
         oReq.addEventListener('load', handler);
