@@ -8,7 +8,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser.json());
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
 let GLOBAL_ARTICLES = [
     {
@@ -231,6 +231,22 @@ app.get('/articles', (req, res) => {
     res.json(GLOBAL_ARTICLES.slice(req.query.skip, req.query.skip + req.query.top));
 });
 
+app.post('/article', (req, res) => {
+    let filledArticle = fillArticle(req.body.article);
+    GLOBAL_ARTICLES.unshift(filledArticle);
+    res.json(filledArticle);
+
+    function fillArticle(article) {
+        article.id = GLOBAL_ARTICLES.length + 1;
+        article.createdAt = new Date();
+        return article;
+    }
+});
+
 app.listen(app.get('port'), () => {
-    console.log('Example app listening on port 3000!')
+    console.log('Example app listening on port 3000!');
+
+    GLOBAL_ARTICLES.sort(function (article1, article2) {
+        return article2.createdAt - article1.createdAt;
+    });
 });
