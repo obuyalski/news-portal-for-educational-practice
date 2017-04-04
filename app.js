@@ -228,15 +228,18 @@ let GLOBAL_ARTICLES = [
 ];
 
 app.get('/articles', (req, res) => {
-    res.json(GLOBAL_ARTICLES.slice(req.query.skip, req.query.skip + req.query.top));
+    let skip = req.query.skip;
+    let top = req.query.top;
+
+    res.json(GLOBAL_ARTICLES.slice(skip, skip + top));
 });
 
 app.get('/article', (req, res) => {
     let id = req.query.id;
-    let article = GLOBAL_ARTICLES.filter((article) => article.id === id);
+    let article = GLOBAL_ARTICLES.filter((article) => article.id === id)[0];
 
     if (article) {
-        res.json(article[0]);
+        res.json(article);
     } else {
         res.status(404);
         res.send('Article with id = ' + id + ' not found');
