@@ -257,11 +257,11 @@ app.post('/article', (req, res) => {
 
 app.delete('/article', (req, res) => {
     let id = req.query.id;
-    let article = GLOBAL_ARTICLES.filter((article) => article.id === id);
+    let article = GLOBAL_ARTICLES.filter((article) => article.id === id)[0];
 
     if (article) {
-        GLOBAL_ARTICLES.splice(id, 1);
-        res.json(article[0]);
+        GLOBAL_ARTICLES.splice(GLOBAL_ARTICLES.indexOf(article), 1);
+        res.json(article);
     } else {
         res.status(404);
         res.send('Article with id = ' + id + ' not found');
@@ -271,11 +271,11 @@ app.delete('/article', (req, res) => {
 app.put('/article', (req, res) => {
     let id = req.query.id;
     let article = req.body.article;
-    let articleArray = GLOBAL_ARTICLES.filter((article) => article.id === id);
+    let oldArticle = GLOBAL_ARTICLES.filter((article) => article.id === id)[0];
 
-    if (articleArray) {
-        replaceArticle(articleArray[0], article);
-        res.json(articleArray[0]);
+    if (oldArticle) {
+        replaceArticle(oldArticle, article);
+        res.json(oldArticle);
     } else {
         res.status(404);
         res.send('Article with id = ' + id + ' not found');
@@ -293,3 +293,8 @@ app.listen(app.get('port'), () => {
         return article2.createdAt - article1.createdAt;
     });
 });
+
+// TODO: 2. pagination + filter
+// TODO: 1. readMore button
+// TODO: 4. login/logout + users database
+// TODO: 3. articles database
