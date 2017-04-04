@@ -1,7 +1,5 @@
 let articleModel = (function () {
 
-    let GLOBAL_ARTICLES = [];
-
     let oReq = new XMLHttpRequest();
 
     function getArticles(params, callback) {
@@ -10,7 +8,6 @@ let articleModel = (function () {
 
         function handler() {
             let articles = JSON.parse(this.responseText);
-            GLOBAL_ARTICLES.push(articles);
 
             callback({status: this.status, statusText: this.statusText}, articles);
             oReq.removeEventListener('load', handler);
@@ -37,7 +34,6 @@ let articleModel = (function () {
 
         function handler() {
             let article = JSON.parse(this.responseText);
-            GLOBAL_ARTICLES.unshift(article);
 
             callback({status: this.status, statusText: this.statusText}, article);
             oReq.removeEventListener('load', handler);
@@ -66,7 +62,6 @@ let articleModel = (function () {
 
         function handler() {
             let article = JSON.parse(this.responseText);
-            GLOBAL_ARTICLES.splice(GLOBAL_ARTICLES.indexOf(article), 1);
 
             callback({status: this.status, statusText: this.statusText}, article);
             oReq.removeEventListener('load', handler);
@@ -103,16 +98,9 @@ let articleModel = (function () {
     function editArticle(article, callback) {
         function handler() {
             let article = JSON.parse(this.responseText);
-            let articleArray = GLOBAL_ARTICLES.filter((article) => article.id === id);
-            replaceArticle(articleArray[0], article);
 
             callback({status: this.status, statusText: this.statusText}, article);
             oReq.removeEventListener('load', handler);
-
-            function replaceArticle(oldArticle, newArticle) {
-                Object.keys(newArticle).forEach((key) => oldArticle[key] = newArticle[key]);
-                //TODO: replace in DOM
-            }
         }
 
         oReq.addEventListener('load', handler);
