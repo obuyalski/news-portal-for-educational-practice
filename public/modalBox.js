@@ -49,6 +49,7 @@ let modalBox = (function () {
 
         if (getCloseBtnInnerText() === EDIT_ARTICLE_BTN_INNER_TEXT) {
             article = prepareArticleFor('edit', article);
+
             articleActions.editArticle(article);
         }
 
@@ -66,7 +67,7 @@ let modalBox = (function () {
         article.image = document.querySelector('#news-img').value;
         article.summary = document.querySelector('.news-summary').value;
         article.content = document.querySelector('.news-content').value;
-        article.tags = document.querySelector('.news-tags').value.split(/\s+/);
+        article.tags = document.querySelector('.news-tags').value.trim().split(/\s+/);
 
         if (mode === 'add') {
             article.author = USERNAME;

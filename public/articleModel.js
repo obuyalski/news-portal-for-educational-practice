@@ -51,7 +51,8 @@ let articleModel = (function () {
         return !!article && isValidString(article.title, 100) &&
             isValidString(article.summary, 200) &&
             isValidString(article.content, 2000) &&
-            (!!article.tags);
+            (!!article.tags) &&
+            (article.tags.every((tag) => !!tag));
     }
 
     function isValidString(string, maxLength) {
@@ -96,6 +97,12 @@ let articleModel = (function () {
     }
 
     function editArticle(article, callback) {
+
+        if (!validateArticle(article)) {
+            callback({status: 500, statusText: 'Article is not valid'}, article);
+            return;
+        }
+
         function handler() {
             let article = JSON.parse(this.responseText);
 
