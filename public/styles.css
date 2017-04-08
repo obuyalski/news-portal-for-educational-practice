@@ -9,6 +9,15 @@ html, body {
     transition: all .2s;
 }
 
+.content {
+    min-height: calc(100vh - 70px);
+}
+
+.sticky-footer {
+    height: 64px;
+}
+
+
 .text {
     background: #1C1C1C url("https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-128.png") no-repeat 2px;
     background-size: 16px;
