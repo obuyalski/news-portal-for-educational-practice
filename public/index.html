@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>NB</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link type="text/css" href="styles.css" rel="stylesheet"/>
     <script src="https://use.fontawesome.com/d4971ca55b.js"></script>
-
 </head>
 <body>
 
@@ -14,52 +14,33 @@
         <ul id="menu">
             <li><a class="home" href="#home">Главная</a></li>
             <li class="search"><input class="text"/></li>
-            <li><a class="fa fa-sign-in" aria-hidden="true"></a>
-                <a class="fa fa-pencil-square-o" aria-hidden="true"></a>
-                <div id="modal-box-overlay">
-                    <div class="new-post">
-                        <h2>Добавить новость</h2>
-                        <input class="news-title" type="text-news" placeholder="Заголовок">
-                        <input id="news-img" type="text-news" placeholder="URL фотографии">
-                        <textarea class="news-summary" placeholder="Краткое описание новости"></textarea>
-                        <textarea class="news-content" placeholder="Новость"></textarea>
-                        <input class="news-tags" placeholder="#теги">
-                        <span class="underline"></span>
-                        <span>
+            <div class="burger">
+                <a href="#" class="burger__button" id="burger-button">
+                    <span class="burger__button__icon"></span>
+                </a>
+                <div class="burger__menu">
+                    <li><a class="fa fa-sign-in" aria-hidden="true"></a><li>
+                    <li><a class="fa fa-pencil-square-o" aria-hidden="true"></a></li>
+                    <div id="modal-box-overlay">
+                        <div class="new-post">
+                            <h2>Добавить новость</h2>
+                            <input class="news-title" type="text-news" placeholder="Заголовок">
+                            <input id="news-img" type="text-news" placeholder="URL фотографии">
+                            <textarea class="news-summary" placeholder="Краткое описание новости"></textarea>
+                            <textarea class="news-content" placeholder="Новость"></textarea>
+                            <input class="news-tags" placeholder="#теги">
+                            <span class="underline"></span>
+                            <span>
                         <button id="btn-publish-article">Опубликовать</button>
                         </span>
+                        </div>
                     </div>
+                    <li class="logout-link">Войти</li>
+                    <li class="dropdown">
+                        <a class="dropbtn"></a>
+                    </li>
                 </div>
-            </li>
-            <li class="logout-link">Войти</li>
-            <!--<div class="logout_sign-in">-->
-                <!--<div class="cont_principal">-->
-                    <!--<div class="cont_centrar">-->
-                        <!--<div class="cont_login">-->
-                            <!--<form action="">-->
-                                <!--<div class="cont_tabs_login">-->
-                                    <!--<ul class='ul_tabs'>-->
-                                        <!--<li class="active"><a href="#"></a>-->
-                                            <!--<span class="linea_bajo_nom"></span>-->
-                                        <!--</li>-->
-                                    <!--</ul>-->
-                                <!--</div>-->
-                                <!--<div class="cont_text_inputs">-->
-                                    <!--<input type="text" class="input_form_sign d_block active_inp" placeholder="Логин" name="emauil_us"/>-->
-                                    <!--<input type="password" class="input_form_sign d_block  active_inp" placeholder="Пароль" name="pass_us"/>-->
-                                    <!--<div class="terms_and_cons d_none">-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--<div class="cont_btn"><button class="btn_sign">Войти</button>-->
-                                <!--</div>-->
-                            <!--</form>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-            <li class="dropdown">
-                <a class="dropbtn"></a>
-            </li>
+            </div>
         </ul>
     </nav>
 </header>
@@ -89,7 +70,6 @@
     </div>
 </div>
 
-
 <div class="article-list">
 </div>
 
@@ -105,7 +85,6 @@
     <hr>
     <div class="article-tags"></div>
 </div>
-
 <footer>
     <div class="project-name">
         <br>5 группа 2 курс
@@ -145,6 +124,7 @@
 <script type="text/javascript" src="articleRenderer.js"></script>
 <script type="text/javascript" src="articleActions.js"></script>
 <script type="text/javascript" src="pagination.js"></script>
+<script type="text/javascript" src="searchEngine.js"></script>
 <script type="text/javascript" src="modalBox.js"></script>
 <script type="text/javascript" src="script.js"></script>
 
