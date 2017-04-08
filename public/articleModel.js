@@ -5,6 +5,7 @@ let articleModel = (function () {
     function getArticles(params, callback) {
         let skip = params.skip || 0;
         let top = params.top || 10;
+        let filterConfig = params.filterConfig || {};
 
         function handler() {
             let articles = JSON.parse(this.responseText);
@@ -19,7 +20,8 @@ let articleModel = (function () {
         oReq.send();
 
         function buildQuery() {
-            return '/articles?skip=' + skip + '&top=' + top;
+            return '/articles?skip=' + skip + '&top=' + top
+                + Object.keys(filterConfig).reduce((result, key) => result += '&' + key + '=' + filterConfig[key], '');
         }
     }
 
@@ -48,6 +50,7 @@ let articleModel = (function () {
     }
 
     function validateArticle(article) {
+        // TODO: handle alien symbols like dots, commas and ect in article
         return !!article && isValidString(article.title, 100) &&
             isValidString(article.summary, 200) &&
             isValidString(article.content, 2000) &&

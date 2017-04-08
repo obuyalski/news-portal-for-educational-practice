@@ -222,16 +222,57 @@ let GLOBAL_ARTICLES = [
         author: 'Буяльский Олег',
         content: 'Гости создали больше опасных моментов и в два раза перебросали минчан, но «зубры» на этот раз очень эффективно использовали свои моменты.',
         tags: ['Динамо', 'Локомотив', 'Шайба', 'Хоккей']
+    },
+
+    {
+        id: '22',
+        title: 'sdfsd',
+        image: 'https://retina.news.mail.ru/pic/f3/81/image29212892_cc52e749d9d7daf538810c7ba4aef26f.jpg',
+        summary: 'sdfgrbeb',
+        createdAt: new Date('2014-02-28T20:00:00'),
+        author: 'Буяльский Олег',
+        content: 'bbb',
+        tags: ['Динамо']
+    },
+    {
+        id: '23',
+        title: 'sdf as dfsa f sasdfsd',
+        image: 'https://retina.news.mail.ru/pic/f3/81/image29212892_cc52e749d9d7daf538810c7ba4aef26f.jpg',
+        summary: 'sdfgrbeb         asdf dsa ',
+        createdAt: new Date('2014-01-28T20:00:00'),
+        author: 'Буяльский Олег',
+        content: 'bbb d fssd sd fsd',
+        tags: ['Динамо', 'DAS']
     }
-
-
 ];
 
 app.get('/articles', (req, res) => {
-    let skip = req.query.skip;
-    let top = req.query.top;
+    let skip = Number(req.query.skip);
+    let top = Number(req.query.top);
+    let filterConfig = {
+        author: req.query.author || '',
+        tags: (req.query.tags) ? req.query.tags.split(',') : [],
+        createdAt: req.query.createdAt || ''
+    };
 
-    res.json(GLOBAL_ARTICLES.slice(skip, skip + top));
+    let articles = GLOBAL_ARTICLES.filter((article) => {
+        return Object.keys(filterConfig).every((key) => {
+            if (!filterConfig[key]) {
+                return true;
+            }
+            if (Array.isArray(filterConfig[key])) {
+                return filterConfig[key].every(tag => article[key].indexOf(tag) !== -1);
+            } else {
+                if (key === 'createdAt') {
+                    return (new Date(filterConfig[key])).toDateString() === article[key].toDateString();
+                } else {
+                    return filterConfig[key] === article[key];
+                }
+            }
+        })
+    }).slice(skip, skip + top);
+
+    res.json(articles);
 });
 
 app.get('/article', (req, res) => {

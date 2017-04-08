@@ -7,6 +7,10 @@ let articleRenderer = (function () {
         ARTICLE_LIST_NODE = document.querySelector('.article-list');
     }
 
+    function clear() {
+        ARTICLE_LIST_NODE.innerHTML = '';
+    }
+
     function renderArticles(articles) {
         let articlesNodes = createArticlesDomEntity(articles);
 
@@ -80,6 +84,7 @@ let articleRenderer = (function () {
 
     return {
         init: init,
+        clear: clear,
         renderArticles: renderArticles,
         renderArticle: renderArticle,
         removeArticle: removeArticle,

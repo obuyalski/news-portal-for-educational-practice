@@ -2,6 +2,7 @@ let pagination = (function () {
     let SHOW_MORE_BUTTON;
     let SKIP;
     let TOP;
+    let FILTER_CONFIG;
 
     function init() {
         SHOW_MORE_BUTTON = document.querySelector('#pagination-show-more');
@@ -9,31 +10,48 @@ let pagination = (function () {
 
         SKIP = 0;
         TOP = 10;
-        loadArticles();
+        FILTER_CONFIG = {};
+
+        showArticles();
     }
 
     function handleShowMoreClick() {
-        loadArticles();
+        showArticles();
     }
 
-    function loadArticles() {
-        articleModel.getArticles({skip: SKIP, top: TOP}, (response, articles) => {
-            if (response.status === 200) {
-                articleRenderer.renderArticles(articles);
-                SKIP += TOP;
-                hideShowMoreButton(articles.length);
-            }
-        });
+    function showArticles() {
+        articleService.loadArticles(SKIP, TOP, FILTER_CONFIG);
     }
 
-    function hideShowMoreButton(articlesNumber) {
+    function changeParams(params) {
+        SKIP = params.skip || 0;
+        TOP = params.top || 10;
+        FILTER_CONFIG = params.filterConfig || {};
+    }
+
+    function update(articlesNumber) {
+        SKIP += TOP;
+
         if (articlesNumber < TOP) {
-            SHOW_MORE_BUTTON.style.display = 'none';
+            hideShowMoreButton();
+        } else {
+            showShowMoreButton();
         }
     }
 
+    function hideShowMoreButton() {
+        SHOW_MORE_BUTTON.style.display = 'none';
+    }
+
+    function showShowMoreButton() {
+        SHOW_MORE_BUTTON.style.display = 'block';
+    }
+
     return {
-        init: init
+        init: init,
+        update: update,
+        showArticles: showArticles,
+        changeParams: changeParams
     }
 
 }());
