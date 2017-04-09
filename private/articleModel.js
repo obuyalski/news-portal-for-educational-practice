@@ -2,7 +2,7 @@ const db = require('diskdb');
 
 let ArticleModel = {
 
-    init: function() {
+    init: function () {
         db.connect('database/', ['articles']);
     },
 
@@ -28,8 +28,8 @@ let ArticleModel = {
                     }
                 })
             })
-            .slice(skip, skip + top)
-            .sort((article1, article2) => article2.createdAt - article1.createdAt);
+            .sort((article1, article2) => (new Date(article2.createdAt)).getTime() - (new Date(article1.createdAt).getTime()))
+            .slice(skip, skip + top);
     },
 
     editArticle: function (oldArticle, newArticle) {

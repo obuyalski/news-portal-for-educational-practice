@@ -27,4 +27,3 @@ app.listen(app.get('port'), () => {
 
 // TODO: 1. readMore button
 // TODO: 2. login/logout + users database
-// TODO: 3. articles database
