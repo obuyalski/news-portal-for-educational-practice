@@ -120,7 +120,7 @@ let articleModel = (function () {
         oReq.send(JSON.stringify({article: article}));
 
         function buildQuery() {
-            return '/article?id=' + article.id;
+            return '/article?id=' + article._id;
         }
     }
 

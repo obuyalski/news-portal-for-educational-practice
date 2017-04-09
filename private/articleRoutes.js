@@ -50,8 +50,8 @@ module.exports.editArticle = (req, res) => {
     let oldArticle = articleService.getArticleById(id);
 
     if (oldArticle) {
-        articleService.replaceArticle(oldArticle, article);
-        res.json(oldArticle);
+        article = articleService.editArticle(oldArticle, article);
+        res.json(article);
     } else {
         res.status(404);
         res.send('Article with id = ' + id + ' not found');

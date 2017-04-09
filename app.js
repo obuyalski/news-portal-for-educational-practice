@@ -19,9 +19,10 @@ app.delete('/article', articleRoutes.removeArticle);
 app.put('/article', articleRoutes.editArticle);
 
 app.listen(app.get('port'), () => {
-    console.log('Example app listening on port 3000!');
 
     articleModel.init();
+
+    console.log('Example app listening on port 3000!');
 });
 
 // TODO: 1. readMore button

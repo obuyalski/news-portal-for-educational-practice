@@ -35,7 +35,7 @@ let modalBox = (function () {
         fillInputFields(obj);
         open();
 
-        currentEditedArticleId = obj.id;
+        currentEditedArticleId = obj._id;
     }
 
     function close() {
@@ -74,7 +74,7 @@ let modalBox = (function () {
         }
 
         if (mode === 'edit') {
-            article.id = currentEditedArticleId + '';
+            article._id = currentEditedArticleId + '';
         }
 
         return article;

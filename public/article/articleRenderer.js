@@ -28,7 +28,7 @@ let articleRenderer = (function () {
     function createArticleDomEntity(article) {
         let template = ARTICLE_TEMPLATE;
 
-        template.content.querySelector('.article-list-item').dataset.id = article.id;
+        template.content.querySelector('.article-list-item').dataset.id = article._id;
         template.content.querySelector('.article-list-item-title').textContent = article.title;
         template.content.querySelector('.article-list-item-summary').textContent = article.summary;
         template.content.querySelector('.article-list-item-content').textContent = article.content;
@@ -79,7 +79,7 @@ let articleRenderer = (function () {
 
     function updateArticle(article) {
         let node = createArticleDomEntity(article);
-        ARTICLE_LIST_NODE.replaceChild(node, document.querySelector("[data-id='" + article.id + "']"));
+        ARTICLE_LIST_NODE.replaceChild(node, document.querySelector("[data-id='" + article._id + "']"));
     }
 
     return {

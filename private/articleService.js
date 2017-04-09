@@ -1,50 +1,44 @@
 const articleModel = require('./articleModel');
 
 let ArticleService = {
+
     getArticles: function (skip, top, filterConfig) {
-        return articleModel.GLOBAL_ARTICLES.filter((article) => {
-            return Object.keys(filterConfig).every((key) => {
-                if (!filterConfig[key]) {
-                    return true;
-                }
-                if (Array.isArray(filterConfig[key])) {
-                    return filterConfig[key].every(tag => article[key].indexOf(tag) !== -1);
-                } else {
-                    if (key === 'createdAt') {
-                        return (new Date(filterConfig[key])).toDateString() === article[key].toDateString();
-                    } else {
-                        return filterConfig[key] === article[key];
-                    }
-                }
-            })
-        }).slice(skip, skip + top);
+        return articleModel.getArticles(skip, top, filterConfig);
     },
 
     getArticleById: function (id) {
-        return articleModel.GLOBAL_ARTICLES.filter((article) => article.id === id)[0];
+        return articleModel.getArticleById(id);
     },
 
-    replaceArticle: function (oldArticle, newArticle) {
-        Object.keys(newArticle).forEach((key) => oldArticle[key] = newArticle[key]);
+    editArticle: function (oldArticle, newArticle) {
+        newArticle = addMissingField(oldArticle, newArticle);
+
+        return articleModel.editArticle(oldArticle, newArticle);
+
+        function addMissingField(oldArticle, newArticle) {
+            Object.keys(oldArticle).forEach((key) => {
+               if (!newArticle[key]) {
+                   newArticle[key] = oldArticle[key];
+               }
+            });
+
+            return newArticle;
+        }
     },
 
     addArticle: function (article) {
-        let filledArticle = fillArticle(article);
-        articleModel.GLOBAL_ARTICLES.unshift(filledArticle);
+        let newArticle = addedFieldsTo(article);
 
-        return filledArticle;
+        return articleModel.addArticle(newArticle);
 
-        function fillArticle(article) {
-            article.id = articleModel.GLOBAL_ARTICLES.length + 1;
+        function addedFieldsTo(article) {
             article.createdAt = new Date();
             return article;
         }
     },
 
     removeArticle: function (id) {
-        let article = this.getArticleById(id);
-
-        return articleModel.GLOBAL_ARTICLES.splice(articleModel.GLOBAL_ARTICLES.indexOf(article), 1)[0];
+        return articleModel.removeArticle(id);
     }
 
 };
