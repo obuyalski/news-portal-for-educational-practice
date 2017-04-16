@@ -4,13 +4,6 @@ let userModel = (function () {
 
     function addUser(user, callback) {
 
-        if (!user) {
-            callback({status: 500, statusText: 'Article is not valid'}, user);
-            return;
-        }
-
-
-
         function handler() {
             let user = JSON.parse(this.responseText);
 
