@@ -39,6 +39,16 @@ let pagination = (function () {
         }
     }
 
+    function save(articlesNumber) {
+        if (articlesNumber % SKIP !== 0 || articlesNumber < TOP) {
+            hideShowMoreButton();
+            return {skip: 0, top: SKIP, filterConfig: {}};
+        } else {
+            showShowMoreButton();
+            return {skip: 0, top: SKIP, filterConfig: {}};
+        }
+    }
+
     function hideShowMoreButton() {
         SHOW_MORE_BUTTON.style.display = 'none';
     }
@@ -50,6 +60,7 @@ let pagination = (function () {
     return {
         init: init,
         update: update,
+        save: save,
         showArticles: showArticles,
         changeParams: changeParams
     }

@@ -13,17 +13,11 @@
     <nav role="navigation">
         <ul id="menu">
             <li><a class="home" href="#home">Главная</a></li>
-            <div class="burger">
-                <a href="#" class="burger__button" id="burger-button">
-                    <span class="burger__button__icon"></span>
-                </a>
-                <div class="burger__menu">
-                    <li><a class="fa fa-sign-in" aria-hidden="true"></a>
-                    <li>
-                    <li><a class="fa fa-pencil-square-o" aria-hidden="true"></a></li>
+                    <li><a class="fa fa-sign-in" aria-hidden="true" style="display: none"></a>
+                    </li>
+                    <li><a class="fa fa-pencil-square-o" aria-hidden="true" style="display: none"></a></li>
                     <div id="modal-box-overlay">
                         <div class="new-post">
-                            <h2>Добавить новость</h2>
                             <input class="news-title" type="text-news" placeholder="Заголовок">
                             <input id="news-img" type="text-news" placeholder="URL фотографии">
                             <textarea class="news-summary" placeholder="Краткое описание новости"></textarea>
@@ -34,17 +28,23 @@
                         <button id="btn-publish-article">Опубликовать</button>
                         </span>
                         </div>
+                        <div class="login" style="display: none">
+                            <form class="login-form">
+                            <input class="user-name" type="text" placeholder="Имя пльзователя"/>
+                            <input class="password" type="password" placeholder="Пароль"/>
+                            <button id="login" onclick="javascript: return false;">Войти</button>
+                            </form>
+                        </div>
                     </div>
                     <li class="logout-link">Войти</li>
                     <li class="dropdown">
                         <a class="dropbtn"></a>
                     </li>
-                </div>
-            </div>
         </ul>
     </nav>
 </header>
 
+<button id="btn-show-filter">Фильтр</button>
 <div class="content">
     <div class="filter">
         <div class="parameter">
@@ -76,16 +76,6 @@
 
     <button id="pagination-show-more">Показать ещё</button>
 
-    <div class="display-news">
-        <p class="image-post"><img id="article-image"></p>
-        <div class="article-title"></div>
-        <div class="article-content"></div>
-        <br>
-        <span class="article-author"></span>
-        <span class="article-date"></span>
-        <hr>
-        <div class="article-tags"></div>
-    </div>
 </div>
 
 <footer class="sticky-footer">
@@ -129,6 +119,7 @@
 <script type="text/javascript" src="utils/pagination.js"></script>
 <script type="text/javascript" src="utils/searchEngine.js"></script>
 <script type="text/javascript" src="article/articleService.js"></script>
+<script type="text/javascript" src="user/userModel.js"></script>
 <script type="text/javascript" src="utils/modalBox.js"></script>
 <script type="text/javascript" src="script.js"></script>
 

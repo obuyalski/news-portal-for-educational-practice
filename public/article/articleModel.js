@@ -32,7 +32,7 @@ let articleModel = (function () {
             return;
         }
 
-        article['author'] = USERNAME;
+        article['author'] = document.getElementsByClassName('dropbtn')[0].innerHTML;
 
         function handler() {
             let article = JSON.parse(this.responseText);
