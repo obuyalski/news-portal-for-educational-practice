@@ -1,7 +1,7 @@
 let modalBox = (function () {
 
-    let modal = document.getElementsByClassName('new-post')[0];
-    let openBtn = document.getElementsByClassName('fa-pencil-square-o')[0];
+    let modal = document.querySelector('.new-post');
+    let openBtn = document.querySelector('.fa-pencil-square-o');
     let closeBtn = document.querySelector('#btn-publish-article');
     let modalOverlay = document.querySelector('#modal-box-overlay');
     let openBtnLogout = document.querySelector('.logout-link');
@@ -67,43 +67,34 @@ let modalBox = (function () {
 
     function closeLoginForm() {
         let user = getUserForm();
-        userModel.addUser(user, (response, user) => {
-                if (response.status === 200) {
-                    let USERNAME = user.username;
-                    document.getElementsByClassName('dropbtn')[0].innerHTML = USERNAME;
-                    handleLoginClick();
-                    createCookie(USERNAME);
-                }
-            }
-        );
+        userModel.addUser(user)
+            .then(user => {
+                let USERNAME = user.username;
+                localStorage.setItem('username', USERNAME);
+                document.getElementsByClassName('dropbtn')[0].innerHTML = USERNAME;
+                handleLoginClick();
+            })
+            .catch(error => console.log(error));
 
         loginForm.style.display = 'none';
         modalOverlay.style.display = 'none';
         openBtnLogout.style.opacity = '1';
     }
 
-    function createCookie(USERNAME) {
-        document.cookie = "userName=" + USERNAME + ";";
-        document.cookie = "fa-pencil-square-o=block;";
-        document.cookie = "fa-sign-in=block;"
-        document.cookie = "logout-link=none";
-
-    }
-
     function handleLoginClick() {
         document.querySelector('.fa-pencil-square-o').style.display = 'block';
         document.querySelector('.dropbtn').style.display = 'block';
         document.querySelector('.fa-sign-in').style.display = 'block';
-        document.querySelector('.fa-chevron-down').style.display = 'block';
         document.querySelector('.logout-link').style.display = 'none';
+        articleRenderer.showBtnChevron();
     }
 
 
     function getUserForm() {
         let user = {};
-        user.username = document.querySelector('.user-name').value.trim().replace(/\s+/, ' ');;
+        user.username = document.querySelector('.user-name').value.trim().replace(/\s+/, ' ');
         user.password = document.querySelector('.password').value;
-        
+
         return user;
     }
 
@@ -116,7 +107,6 @@ let modalBox = (function () {
 
         if (mode === 'add') {
             article.author = document.getElementsByClassName('dropbtn')[0].innerHTML;
-
         }
 
         if (mode === 'edit') {

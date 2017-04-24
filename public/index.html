@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>NB</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="text/css" href="styles.css" rel="stylesheet"/>
+    <link type="text/css" href="css/styles.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link type="text/css" href="css/typography.css" rel="stylesheet"/>
     <script src="https://use.fontawesome.com/d4971ca55b.js"></script>
 </head>
 <body>
@@ -13,9 +15,9 @@
     <nav role="navigation">
         <ul id="menu">
             <li><a class="home" href="#home">Главная</a></li>
-                    <li><a class="fa fa-sign-in" aria-hidden="true" style="display: none"></a>
+                    <li><a class="fa fa-sign-in" aria-hidden="true"></a>
                     </li>
-                    <li><a class="fa fa-pencil-square-o" aria-hidden="true" style="display: none"></a></li>
+                    <li><a class="fa fa-pencil-square-o" aria-hidden="true"></a></li>
                     <div id="modal-box-overlay">
                         <div class="new-post">
                             <input class="news-title" type="text-news" placeholder="Заголовок">
@@ -28,9 +30,9 @@
                         <button id="btn-publish-article">Опубликовать</button>
                         </span>
                         </div>
-                        <div class="login" style="display: none">
+                        <div class="login">
                             <form class="login-form">
-                            <input class="user-name" type="text" placeholder="Имя пльзователя"/>
+                            <input class="user-name" type="text" placeholder="Имя пользователя"/>
                             <input class="password" type="password" placeholder="Пароль"/>
                             <button id="login" onclick="javascript: return false;">Войти</button>
                             </form>
@@ -98,29 +100,29 @@
                 <button type="button" class="remove-post">Удалить</button>
             </div>
         </div>
-        <div class="article-list-item-title"></div>
-        <div class="article-list-item-summary">
-        </div>
-        <div class="article-list-item-content">
-        </div>
+        <h3 class="article-list-item-title"></h3>
+        <div class="article-list-item-tags"></div>
+        <p class="article-list-item-summary"></p>
+        <p class="article-list-item-content"></p>
         <div class="article-list-item-meta">
             <span class="article-list-item-author"></span>
             <span class="article-list-item-date"></span>
         </div>
-        <div class="article-list-item-tags"></div>
         <hr>
-        <span><button class="read-more">Читать</button></span>
+        <button class="article-list-item-btn">Читать</button>
+        <button class="article-list-item-btn-back">Назад</button>
     </div>
 </template>
 
-<script type="text/javascript" src="article/articleModel.js"></script>
-<script type="text/javascript" src="article/articleRenderer.js"></script>
-<script type="text/javascript" src="article/articleActions.js"></script>
-<script type="text/javascript" src="utils/pagination.js"></script>
-<script type="text/javascript" src="utils/searchEngine.js"></script>
-<script type="text/javascript" src="article/articleService.js"></script>
-<script type="text/javascript" src="user/userModel.js"></script>
-<script type="text/javascript" src="utils/modalBox.js"></script>
+
+<script type="text/javascript" src="js/article/articleModel.js"></script>
+<script type="text/javascript" src="js/article/articleRenderer.js"></script>
+<script type="text/javascript" src="js/article/articleActions.js"></script>
+<script type="text/javascript" src="js/utils/pagination.js"></script>
+<script type="text/javascript" src="js/utils/searchEngine.js"></script>
+<script type="text/javascript" src="js/article/articleService.js"></script>
+<script type="text/javascript" src="js/user/userModel.js"></script>
+<script type="text/javascript" src="js/utils/modalBox.js"></script>
 <script type="text/javascript" src="script.js"></script>
 
 </body>

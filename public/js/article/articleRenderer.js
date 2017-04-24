@@ -17,6 +17,20 @@ let articleRenderer = (function () {
         articlesNodes.forEach((node) => {
             ARTICLE_LIST_NODE.appendChild(node);
         });
+        showBtnChevron();
+    }
+    
+    function showBtnChevron() {
+        if (localStorage.getItem('username') === null) {
+            for (let i = 0; i < document.querySelectorAll('.fa-chevron-down').length; i++) {
+                document.querySelectorAll('.fa-chevron-down').item(i).style.display = 'none';
+            }
+        }
+        else {
+            for (let i = 0; i < document.querySelectorAll('.fa-chevron-down').length; i++) {
+                document.querySelectorAll('.fa-chevron-down').item(i).style.display = 'inline-block';
+            }
+        }
     }
 
     function createArticlesDomEntity(articles) {
@@ -37,13 +51,13 @@ let articleRenderer = (function () {
         template.content.querySelector('.article-list-item-date').textContent = formatDate(article.createdAt);
         formatTags(template.content.querySelector('.article-list-item-tags'), article.tags);
 
-        template.content.querySelector('.fa-chevron-down').style.display = 'inline-block';
         return template.content.querySelector('.article-list-item').cloneNode(true);
     }
 
     function renderArticle(article) {
         let node = createArticleDomEntity(article);
         ARTICLE_LIST_NODE.insertBefore(node, ARTICLE_LIST_NODE.childNodes[0]);
+
     }
 
     function formatDate(string) {
@@ -75,11 +89,18 @@ let articleRenderer = (function () {
 
     function removeArticle(articleDomEntity) {
         ARTICLE_LIST_NODE.removeChild(articleDomEntity);
+        if (document.querySelector('.fa-pencil-square-o').style.display === 'none') {
+            articleActions.handleDisplayArticleList(true);
+        }
     }
 
     function updateArticle(article) {
         let node = createArticleDomEntity(article);
         ARTICLE_LIST_NODE.replaceChild(node, document.querySelector("[data-id='" + article._id + "']"));
+        if (document.querySelector('.fa-pencil-square-o').style.display === 'none') {
+            articleActions.articleReadMode();
+        }
+        return true;
     }
 
     return {
@@ -88,6 +109,7 @@ let articleRenderer = (function () {
         renderArticles: renderArticles,
         renderArticle: renderArticle,
         removeArticle: removeArticle,
-        updateArticle: updateArticle
+        updateArticle: updateArticle,
+        showBtnChevron : showBtnChevron
     };
 }());

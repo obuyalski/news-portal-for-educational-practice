@@ -7,11 +7,13 @@ let UserModel = {
     },
 
     getUser: function (user) {
-        return db.users.findOne({username: user.username, password: user.password});
-    },
-
-    getUserByName: function (username) {
-        return db.users.findOne({username: username});
+        return new Promise (function (resolve, reject) {
+        let userDb = db.users.findOne({username: user.username, password: user.password});
+        if (userDb){
+            resolve(userDb);
+            return;
+        }
+        reject(404)});
     }
 };
 
