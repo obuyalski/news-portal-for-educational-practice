@@ -1,14 +1,17 @@
 [
   {
-  "username": "Буяльский Олег",
-  "password": "123"
+    "username": "Буяльский Олег",
+    "login": "Oleg",
+    "password": "123"
   },
   {
     "username": "Мошко Андрей",
+    "login": "Andy",
     "password": "124"
   },
   {
     "username": "Васильков Дмитрий",
+    "login": "Vasya",
     "password": "0.0.1"
   }
 ]

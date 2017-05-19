@@ -11,119 +11,108 @@
 </head>
 <body>
 
-<header>
-    <nav role="navigation">
-        <ul id="menu">
-            <li><a class="home" href="#home">Главная</a></li>
-                    <li><a class="fa fa-sign-in" aria-hidden="true"></a>
-                    </li>
-                    <li><a class="fa fa-pencil-square-o" aria-hidden="true"></a></li>
-                    <div id="modal-box-overlay">
-                        <div class="new-post">
-                            <input class="news-title" type="text-news" placeholder="Заголовок">
-                            <input id="news-img" type="text-news" placeholder="URL фотографии">
-                            <textarea class="news-summary" placeholder="Краткое описание новости"></textarea>
-                            <textarea class="news-content" placeholder="Новость"></textarea>
-                            <input class="news-tags" placeholder="#теги">
-                            <span class="underline"></span>
-                            <span>
+    <header>
+        <nav role="navigation">
+            <ul id="menu">
+                <li><a class="home" href="#home">Главная</a></li>
+                <li><a class="fa fa-sign-in" aria-hidden="true"></a>
+                </li>
+                <li><a class="fa fa-pencil-square-o" aria-hidden="true"></a></li>
+                <div id="modal-box-overlay">
+                    <div class="new-post">
+                        <input class="news-title" type="text-news" placeholder="Заголовок">
+                        <input id="news-img" type="text-news" placeholder="URL фотографии">
+                        <textarea class="news-summary" placeholder="Краткое описание новости"></textarea>
+                        <textarea class="news-content" placeholder="Новость"></textarea>
+                        <input class="news-tags" placeholder="#теги">
+                        <span class="underline"></span>
+                        <span>
                         <button id="btn-publish-article">Опубликовать</button>
                         </span>
-                        </div>
-                        <div class="login">
-                            <form class="login-form">
+                    </div>
+                    <div class="login">
+                        <form class="login-form">
                             <input class="user-name" type="text" placeholder="Имя пользователя"/>
                             <input class="password" type="password" placeholder="Пароль"/>
                             <button id="login" onclick="javascript: return false;">Войти</button>
-                            </form>
-                        </div>
+                        </form>
                     </div>
-                    <li class="logout-link">Войти</li>
-                    <li class="dropdown">
-                        <a class="dropbtn"></a>
-                    </li>
-        </ul>
-    </nav>
-</header>
+                </div>
+                <li class="logout-link">Войти</li>
+                <li class="dropdown">
+                    <a class="dropbtn"></a>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
-<button id="btn-show-filter">Фильтр</button>
-<div class="content">
-    <div class="filter">
-        <div class="parameter">
-            <div class="fa fa-sliders" aria-hidden="true">
-                Параметры поиска
+    <button id="btn-show-filter">Фильтр</button>
+    <div class="content">
+        <div class="filter">
+            <div class="parameter">
+                <div class="fa fa-sliders" aria-hidden="true">
+                    Параметры поиска
+                </div>
+            </div>
+            <div>
+                <p>Выберите дату:<br><input class="search-articles-by-date" type="date" name="calendar">
+                    <input class="search-articles-by-author" type="datetime" placeholder="Имя автора">
+                    <input class="search-articles-by-tags" type="datetime" placeholder="Теги">
+                    <button class="filter-article-list">Поиск</button>
             </div>
         </div>
-        <div>
-            <p>Выберите дату:<br><input class="search-articles-by-date" type="date" name="calendar">
-                <input class="search-articles-by-author" type="datetime" placeholder="Имя автора">
-                <input class="search-articles-by-tags" type="datetime" placeholder="Теги">
-                <button class="filter-article-list">Поиск</button>
+
+        <div class="article-list">
         </div>
-        <div class="header-tags">
-            Популярное
-        </div>
-        <div class="tags">
-            <span class="tag" id="1">Минск</span>
-            <span class="tag">Новости</span>
-            <span class="tag">Портал</span>
-            <span class="tag">Снег</span>
-            <span class="tag">Весна</span>
-            <span class="tag">Март</span>
-        </div>
+
+        <button id="pagination-show-more">Показать ещё</button>
+
     </div>
 
-    <div class="article-list">
-    </div>
+    <footer class="sticky-footer">
+        <div class="project-name">
+            <br>5 группа 2 курс
+            <br>zidabah@mail.ru
+            <br>
+            <div id="current-year">©2017</div>
+        </div>
+    </footer>
 
-    <button id="pagination-show-more">Показать ещё</button>
-
-</div>
-
-<footer class="sticky-footer">
-    <div class="project-name">
-        <br>5 группа 2 курс
-        <br>zidabah@mail.ru
-        <br>
-        <div id="current-year">©2017</div>
-    </div>
-</footer>
-
-<template id="template-article-list-item">
-    <div class="article-list-item" data-id="id">
-        <img id="article-list-item-image" src="https://static.pexels.com/photos/20974/pexels-photo.jpg"
-             alt="Photo is not available">
-        <div class="dropdn" style="float: right">
-            <div class="fa fa-chevron-down" aria-hidden="true"></div>
-            <div class="dropdown-content">
-                <button type="button" class="edit-post">Изменить</button>
-                <button type="button" class="remove-post">Удалить</button>
+    <template id="template-article-list-item">
+        <div class="article-list-item" data-id="id">
+            <img id="article-list-item-image" src="https://static.pexels.com/photos/20974/pexels-photo.jpg"
+                 alt="Photo is not available">
+            <div class="dropdn" style="float: right">
+                <div class="fa fa-chevron-down" aria-hidden="true"></div>
+                <div class="dropdown-content">
+                    <button type="button" class="edit-post">Изменить</button>
+                    <button type="button" class="remove-post">Удалить</button>
+                </div>
             </div>
+            <h3 class="article-list-item-title"></h3>
+            <div class="article-list-item-tags"></div>
+            <p class="article-list-item-summary"></p>
+            <p class="article-list-item-content"></p>
+            <div class="article-list-item-meta">
+                <span class="article-list-item-author"></span>
+                <span class="article-list-item-date"></span>
+            </div>
+            <hr>
+            <button class="article-list-item-btn">Читать</button>
+            <button class="article-list-item-btn-back">Назад</button>
         </div>
-        <h3 class="article-list-item-title"></h3>
-        <div class="article-list-item-tags"></div>
-        <p class="article-list-item-summary"></p>
-        <p class="article-list-item-content"></p>
-        <div class="article-list-item-meta">
-            <span class="article-list-item-author"></span>
-            <span class="article-list-item-date"></span>
-        </div>
-        <hr>
-        <button class="article-list-item-btn">Читать</button>
-        <button class="article-list-item-btn-back">Назад</button>
-    </div>
-</template>
+    </template>
 
 
-<script type="text/javascript" src="js/article/articleModel.js"></script>
-<script type="text/javascript" src="js/article/articleRenderer.js"></script>
-<script type="text/javascript" src="js/article/articleActions.js"></script>
-<script type="text/javascript" src="js/utils/pagination.js"></script>
-<script type="text/javascript" src="js/utils/searchEngine.js"></script>
-<script type="text/javascript" src="js/article/articleService.js"></script>
-<script type="text/javascript" src="js/user/userModel.js"></script>
-<script type="text/javascript" src="js/utils/modalBox.js"></script>
-<script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="js/article/articleModel.js"></script>
+    <script type="text/javascript" src="js/article/articleRenderer.js"></script>
+    <script type="text/javascript" src="js/article/articleActions.js"></script>
+    <script type="text/javascript" src="js/utils/pagination.js"></script>
+    <script type="text/javascript" src="js/utils/searchEngine.js"></script>
+    <script type="text/javascript" src="js/article/articleService.js"></script>
+    <script type="text/javascript" src="js/user/userModel.js"></script>
+    <script type="text/javascript" src="js/utils/modalBox.js"></script>
+    <script type="text/javascript" src="script.js"></script>
 
 </body>
 </html>

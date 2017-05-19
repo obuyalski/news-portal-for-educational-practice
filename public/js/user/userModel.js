@@ -1,46 +1,86 @@
-let userModel = (function () {
+const userModel = (function () {
+  const oReq = new XMLHttpRequest();
 
-    let oReq = new XMLHttpRequest();
-    let username;
+  function init() {
+    checkUser()
+      .then(initUser, window.console.log);
+  }
 
-    function init() {
-        if (localStorage.getItem('username')) {
-            username = localStorage.getItem('username');
-            document.querySelector('.dropbtn').innerHTML = username;
-            document.querySelector('.logout-link').style.display = 'none';
-            document.querySelector('.fa-pencil-square-o').style.display = 'block';
-            document.querySelector('.fa-sign-in').style.display = 'block';
-            document.querySelector('.logout-link').style.display = 'none';
-        } else {
-            document.querySelector('.fa-pencil-square-o').style.display = 'none';
-            document.querySelector('.fa-sign-in').style.display = 'none';
-            document.querySelector('.logout-link').style.display = 'block';
+  function initUser(user) {
+    if (user) {
+      document.querySelector('.dropbtn').innerHTML = user.username;
+      document.querySelector('.logout-link').style.display = 'none';
+      document.querySelector('.fa-pencil-square-o').style.display = 'block';
+      document.querySelector('.fa-sign-in').style.display = 'block';
+      document.querySelector('.logout-link').style.display = 'none';
+      articleRenderer.showBtnChevron();
+    } else {
+      document.querySelector('.fa-pencil-square-o').style.display = 'none';
+      document.querySelector('.fa-sign-in').style.display = 'none';
+      document.querySelector('.logout-link').style.display = 'block';
+    }
+  }
+
+  function checkUser() {
+    return new Promise((resolve, reject) => {
+      oReq.open('GET', '/user', true);
+      oReq.onload = function () {
+        if (this.status === 200) {
+          const rt = this.responseText;
+          const res = rt ? JSON.parse(rt) : null;
+          resolve(res);
         }
-    }
+      };
+      oReq.onerror = function () {
+        reject(`${this.status}, ${this.statusText}`);
+      };
+      oReq.send();
+    });
+  }
 
-    function addUser(user) {
-        return new Promise(function (resolve, reject) {
-            oReq.open('POST', '/user', true);
-            oReq.setRequestHeader('content-type', 'application/json');
+  function login(user) {
+    return new Promise((resolve, reject) => {
+      oReq.open('POST', '/login', true);
+      oReq.setRequestHeader('content-type', 'application/json');
+      oReq.onload = function () {
+        if (this.status === 200) {
+          const res = JSON.parse(this.responseText);
+          if (res.user) {
+            resolve(res.user);
+          } else {
+            reject(`${this.status}, ${this.statusText}`);
+          }
+        }
+      };
+      oReq.onerror = function () {
+        reject(`${this.status}, ${this.statusText}`);
+      };
+      oReq.send(JSON.stringify(user));
+    });
+  }
 
-            oReq.onload = function () {
-                if (this.status === 200) {
-                    let user = JSON.parse(this.responseText);
-                    resolve(user);
-                }
-            };
-            oReq.onerror = function () {
-                reject(this.status + ' ' + this.statusText);
-            };
+  function logout() {
+    return new Promise((resolve, reject) => {
+      oReq.open('DELETE', '/logout', true);
+      oReq.setRequestHeader('content-type', 'application/json');
+      oReq.onload = function () {
+        if (this.status === 200) {
+          resolve();
+        } else {
+          reject(`${this.status}, ${this.statusText}`);
+        }
+      };
+      oReq.onerror = function () {
+        reject(`${this.status}, ${this.statusText}`);
+      };
+      oReq.send();
+    });
+  }
 
-            oReq.send(JSON.stringify({user: user}));
 
-        });
-    }
-
-    return {
-        addUser: addUser,
-        init: init
-    }
-
+  return {
+    login,
+    logout,
+    init
+  };
 }());

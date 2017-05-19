@@ -1,170 +1,163 @@
-let articleModel = (function () {
+const articleModel = (function () {
+  const oReq = new XMLHttpRequest();
 
-    let oReq = new XMLHttpRequest();
+  function getArticles(params) {
+    return new Promise((resolve, reject) => {
+      const skip = params.skip || 0;
+      const top = params.top || 10;
+      const filterConfig = params.filterConfig || {};
+      oReq.open('GET', buildQuery(), true);
 
-    function getArticles(params) {
-        return new Promise(function (resolve, reject) {
-            let skip = params.skip || 0;
-            let top = params.top || 10;
-            let filterConfig = params.filterConfig || {};
+      oReq.onload = function () {
+        if (this.status === 200) {
+          const articles = JSON.parse(this.responseText);
+          resolve(articles);
+        } else {
+          reject(createError(this.status, this.statusText));
+        }
+      };
 
-            oReq.open('GET', buildQuery(), true);
+      oReq.onerror = function () {
+        reject(new Error('Network Error'));
+      };
 
-            oReq.onload = function () {
-                if (this.status === 200) {
-                    let articles = JSON.parse(this.responseText);
-                    resolve(articles);
-                }
-                else {
-                    reject(createError(this.status, this.statusText));
-                }
-            };
+      oReq.send();
+      function buildQuery() {
+        return `/articles?skip=${skip}&top=${top}${Object.keys(filterConfig).reduce((result, key) => {
+          const concatenateString = `&${key}=${filterConfig[key]}`;
+          return result + concatenateString;
+        }, '')}`;
+      }
+    });
+  }
 
-            oReq.onerror = function () {
-                reject(new Error('Network Error'));
-            };
+  function addArticle(article) {
+    return new Promise((resolve, reject) => {
+      oReq.open('POST', '/article', true);
+      oReq.setRequestHeader('content-type', 'application/json');
 
-            oReq.send();
+      if (!validateArticle(article)) {
+        reject({ status: 500, statusText: 'Article is not valid' });
+        return;
+      }
 
-            function buildQuery() {
-                return '/articles?skip=' + skip + '&top=' + top
-                    + Object.keys(filterConfig).reduce((result, key) => result += '&' + key + '=' + filterConfig[key], '');
-            }
-        });
-    }
+      oReq.onload = function () {
+        if (this.status === 200) {
+          const article = JSON.parse(this.responseText);
+          resolve(article);
+        }
+      };
+      oReq.onerror = function () {
+        reject(new Error('Network Error'));
+      };
+      oReq.send(JSON.stringify({ article }));
+    });
+  }
 
-    function addArticle(article) {
-        return new Promise(function (resolve, reject) {
-                oReq.open('POST', '/article', true);
-                oReq.setRequestHeader('content-type', 'application/json');
+  function validateArticle(article) {
+    return !!article && isValidString(article.title, 100) &&
+      isValidString(article.summary, 200) &&
+      isValidString(article.content, 2000) &&
+      (!!article.tags) &&
+      (article.tags.every(tag => !!tag));
+  }
 
-                if (!validateArticle(article)) {
-                    reject({status: 500, statusText: 'Article is not valid'});
-                    return;
-                }
+  function isValidString(string, maxLength) {
+    return !!string && string.length > 0 && string.length <= maxLength;
+  }
 
-                oReq.onload = function () {
-                    if (this.status === 200) {
-                        let article = JSON.parse(this.responseText);
-                        resolve(article);
-                    }
-                };
-                oReq.onerror = function () {
-                    reject(new Error('Network Error'));
-                };
-                oReq.send(JSON.stringify({article: article}));
-            }
-        );
-    }
+  function removeArticleById(id) {
+    return new Promise((resolve, reject) => {
+      oReq.open('DELETE', buildQuery(), true);
+      oReq.onload = function () {
+        if (this.status === 200) {
+          const article = JSON.parse(this.responseText);
+          if (article) {
+            resolve(article);
+          } else {
+            reject(createError(this.status, this.statusText));
+          }
+        }
+      };
+      oReq.onerror = function () {
+        reject(new Error('Network Error'));
+      };
 
-    function validateArticle(article) {
-        return !!article && isValidString(article.title, 100) &&
-            isValidString(article.summary, 200) &&
-            isValidString(article.content, 2000) &&
-            (!!article.tags) &&
-            (article.tags.every((tag) => !!tag));
-    }
+      oReq.send();
 
-    function isValidString(string, maxLength) {
-        return !!string && string.length > 0 && string.length <= maxLength;
-    }
+      function buildQuery() {
+        return `/article?id=${id}`;
+      }
+    });
+  }
 
-    function removeArticleById(id) {
-        return new Promise(function (resolve, reject) {
-            oReq.open('DELETE', buildQuery(), true);
-            oReq.onload = function () {
-                if (this.status === 200) {
-                    let article = JSON.parse(this.responseText);
-                    if (article) {
-                        resolve(article);
-                    }
-                    else {
-                        reject(createError(this.status, this.statusText));
-                    }
-                }
-            };
-            oReq.onerror = function () {
-                reject(new Error('Network Error'));
-            };
+  function getArticleById(id) {
+    return new Promise((resolve, reject) => {
+      oReq.open('GET', buildQuery(), true);
 
-            oReq.send();
+      oReq.onload = function () {
+        if (this.status === 200) {
+          const article = JSON.parse(this.responseText);
+          if (article) {
+            resolve(article);
+          } else {
+            reject(createError(this.status, this.statusText));
+          }
+        }
+      };
 
-            function buildQuery() {
-                return '/article?id=' + id;
-            }
-        });
-    }
+      oReq.onerror = function () {
+        reject(new Error('Network Error'));
+      };
 
-    function getArticleById(id) {
-        return new Promise(function (resolve, reject) {
-            oReq.open('GET', buildQuery(), true);
+      oReq.send();
 
-            oReq.onload = function () {
-                if (this.status === 200) {
-                    let article = JSON.parse(this.responseText);
-                    if (article) {
-                        resolve(article);
-                    }
-                    else {
-                        reject(createError(this.status, this.statusText));
-                    }
-                }
-            };
-
-            oReq.onerror = function () {
-                reject(new Error('Network Error'));
-            };
-
-            oReq.send();
-
-            function buildQuery() {
-                return '/article?id=' + id;
-            }
-        });
-    }
+      function buildQuery() {
+        return `/article?id=${id}`;
+      }
+    });
+  }
 
 
-    function editArticle(article) {
-        return new Promise(function (resolve, reject) {
-            oReq.open('PUT', buildQuery(), true);
-            oReq.setRequestHeader('content-type', 'application/json');
+  function editArticle(article) {
+    return new Promise((resolve, reject) => {
+      oReq.open('PUT', buildQuery(), true);
+      oReq.setRequestHeader('content-type', 'application/json');
 
-            if (!validateArticle(article)) {
-                reject({status: 500, statusText: 'Article is not valid'});
-                return;
-            }
+      if (!validateArticle(article)) {
+        reject({ status: 500, statusText: 'Article is not valid' });
+        return;
+      }
 
-            oReq.onload = function () {
-                if (this.status === 200) {
-                    let article = JSON.parse(this.responseText);
-                    resolve(article);
-                }
-            };
+      oReq.onload = function () {
+        if (this.status === 200) {
+          const article = JSON.parse(this.responseText);
+          resolve(article);
+        }
+      };
 
-            oReq.onerror = function () {
-                reject(new Error('Network Error'));
-            };
+      oReq.onerror = function () {
+        reject(new Error('Network Error'));
+      };
 
-            oReq.send(JSON.stringify({article: article}));
+      oReq.send(JSON.stringify({ article }));
+      function buildQuery() {
+        return `/article?id=${article._id}`;
+      }
+    });
+  }
 
-            function buildQuery() {
-                return '/article?id=' + article._id;
-            }
-        });
-    }
+  function createError(status, statusText) {
+    const error = new Error(statusText);
+    error.code = status;
+    return error;
+  }
 
-            function createError(status, statusText) {
-                let error = new Error(statusText);
-                error.code = status;
-                return error;
-            }
-
-            return {
-                getArticles: getArticles,
-                addArticle: addArticle,
-                removeArticleById: removeArticleById,
-                getArticleById: getArticleById,
-                editArticle: editArticle
-            };
-
-        }());
+  return {
+    getArticles,
+    addArticle,
+    removeArticleById,
+    getArticleById,
+    editArticle
+  };
+}());
